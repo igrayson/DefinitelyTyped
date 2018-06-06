@@ -113,6 +113,17 @@ shell.set('-v');
 shell.set('+f');
 shell.set('-f');
 
+shell.cmd('node', ['--version'], {silent: true, uid: 100, encoding: 'utf-8'}, (code, stdout, stderr) => {
+    const version = stdout;
+    const num : number = code;
+});
+
+shell.cmd('date', {silent: true, uid: 100, encoding: 'utf-8', windowsVerbatimArguments: true}, (code, stdout, stderr) => {
+    const date = stdout;
+});
+
+shell.cmd('exit', ["0"]);
+
 shell.chmod(755, "/Users/brandon");
 shell.chmod("755", "/Users/brandon"); // same as above
 shell.chmod("u+x", "/Users/brandon");

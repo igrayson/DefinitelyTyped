@@ -4,6 +4,7 @@
 //                 Vojtech Jasny <https://github.com/voy>
 //                 George Kalpakas <https://github.com/gkalpak>
 //                 Paul Huynh <https://github.com/pheromonez>
+//                 Ian Grayson <https://github.com/igrayson>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 /// <reference types="node"/>
@@ -325,6 +326,42 @@ export function exit(code: number): void;
  * Object containing environment variables (both getter and setter). Shortcut to process.env.
  */
 export const env: { [key: string]: string };
+
+/**
+ * An alternative for exec(), with better security around globbing, comamnd injection, and variable expansion. This is
+ * guaranteed to only run one external command, and won't handle special characters in unexpected and unsafe ways.
+ *
+ * Executes the given command synchronously.
+ *
+ * By default, this performs globbing on all platforms (but you can disable this for extra security using `set('-f')`).
+ *
+ * @param       command  The command to execute.
+ * @param       options  Execution options.
+ * @param       callback The command to execute.
+ * @return      Returns an object containing the return code and output as string.
+ */
+export function cmd(command: string, options?: CmdOptions, callback?: ExecCallback): ShellString;
+
+/**
+ * An alternative for exec(), with better security around globbing, comamnd injection, and variable expansion. This is
+ * guaranteed to only run one external command, and won't handle special characters in unexpected and unsafe ways.
+ *
+ * Executes the given command synchronously.
+ *
+ * By default, this performs globbing on all platforms (but you can disable this for extra security using `set('-f')`).
+ *
+ * @param       command  The command to execute.
+ * @param       args     Arguments to the command.
+ * @param       options  Execution options.
+ * @param       callback The command to execute.
+ * @return      Returns an object containing the return code and output as string.
+ */
+export function cmd(command: string, args?: string[], options?: CmdOptions, callback?: ExecCallback): ShellString;
+
+export interface CmdOptions extends child.SpawnSyncOptions {
+    /** Do not echo program output to console. */
+    silent?: boolean;
+}
 
 /**
  * Executes the given command synchronously.
